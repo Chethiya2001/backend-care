@@ -1,7 +1,7 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../db.js";
-import Doctor from "./Doctor.js";  // Assuming Doctor model is already defined
-import Patient from "./Patient.js";  // Assuming Patient model is already defined
+import Doctor from "./Doctor.js"; // Assuming Doctor model is already defined
+import Patient from "./Patient.js"; // Assuming Patient model is already defined
 
 const Appointment = sequelize.define("Appointment", {
   id: {
@@ -15,33 +15,32 @@ const Appointment = sequelize.define("Appointment", {
     unique: true,
   },
   date: {
-    type: DataTypes.DATEONLY,  
+    type: DataTypes.DATEONLY,
     allowNull: false,
   },
   time: {
-    type: DataTypes.TIME,  
+    type: DataTypes.TIME,
     allowNull: false,
   },
-  doctorId: {
-    type: DataTypes.UUID,
+  doctorNic: {
+    type: DataTypes.STRING,
     allowNull: false,
     references: {
-      model: Doctor,  
-      key: 'id',
+      model: Doctor,
+      key: "nic",
     },
   },
-  patientId: {
-    type: DataTypes.UUID,
+  patientNic: {
+    type: DataTypes.STRING,
     allowNull: false,
     references: {
-      model: Patient,  
-      key: 'id',
+      model: Patient,
+      key: "nic",
     },
-  }
+  },
 });
 
-
-Appointment.belongsTo(Doctor, { foreignKey: 'doctorId' });
-Appointment.belongsTo(Patient, { foreignKey: 'patientId' });
+Appointment.belongsTo(Doctor, { foreignKey: "doctorNic" });
+Appointment.belongsTo(Patient, { foreignKey: "patientNic" });
 
 export default Appointment;

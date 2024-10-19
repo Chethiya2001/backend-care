@@ -4,15 +4,15 @@ const router = express.Router();
 import {
   addStaff,
   getStaff,
-  getStaffById,
-  updateStaff,
   deleteStaff,
+  getStaffByNic,
+  updateStaff,
 } from "../controllers/staffController.js";
 
 router.post("/", addStaff);
 router.get("/", getStaff);
-router.get("/:id", getStaffById);
-router.put("/:id", updateStaff);
-router.delete("/:id", deleteStaff);
+router.delete("/:nic", deleteStaff);
+router.get("/nic/:nic", getStaffByNic);
+router.put("/:nic", updateStaff);
 
-export default router; 
+export default router;

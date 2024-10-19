@@ -1,9 +1,9 @@
-import Staff from "../models/staff.js";
+import Staff from "../models/Medicals.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 export const addStaff = async (req, res) => {
   try {
-    const { name, address, email, contact, nic, password } = req.body;
+    const { name, address, email, contact, nic, age, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
     const staff = await Staff.create({
       name,
@@ -12,6 +12,7 @@ export const addStaff = async (req, res) => {
       contact,
       nic,
       password: hashedPassword,
+      age,
     });
     res.status(201).json({
       message: "Staff added successfully",
@@ -32,47 +33,78 @@ export const getStaff = async (req, res) => {
   }
 };
 
-export const getStaffById = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const staff = await Staff.findByPk(id);
-    if (!staff) {
-      return res.status(404).send("staff not found");
-    }
-    res.status(200).json(staff);
-  } catch (error) {
-    res.status(500).send(`Error fetching staff: ${error.message}`);
-  }
-};
-
 export const updateStaff = async (req, res) => {
   try {
-    const { id } = req.params;
-    const { name, address, email, contact, nic } = req.body;
-    const [updated] = await Staff.update(
-      { name, address, email, contact, nic },
-      { where: { id } }
-    );
-    if (!updated) {
-      return res.status(404).send("staff not found");
+    const { nic } = req.params;
+    const { name, address, email, qualifications, age, gender, contact } =
+      req.body;
+
+    const staff = await Staff.findByPk(nic);
+
+    if (!staff) {
+      return res.status(404).json({ message: "Staff not found" });
     }
-    const updatedstaff = await staff.findByPk(id);
-    res.status(200).json(updatedstaff);
+
+    // Update staff details
+    await Staff.update(
+      {
+        name,
+        address,
+        email,
+        qualifications,
+        gender,
+        contact,
+        age,
+      },
+      { where: { nic } } // Add where condition to specify which staff to updatedoctor
+    );
+
+    // Fetch the updated staff to return the updated details
+    const updatedStaff = await Staff.findByPk(nic);
+
+    res.status(200).json({
+      message: "Staff updated successfully",
+      updatedStaff,
+    });
   } catch (error) {
-    res.status(500).send(`Error updating staff: ${error.message}`);
+    res.status(500).json({ message: `Error updating staff: ${error.message}` });
   }
 };
 
 export const deleteStaff = async (req, res) => {
   try {
-    const { id } = req.params;
-    const deleted = await Staf.destroy({ where: { id } });
-    if (!deleted) {
-      return res.status(404).send("staff not found");
+    const { nic } = req.params;
+    const staff = await Staff.findByPk(nic);
+
+    if (!staff) {
+      return res.status(404).json({ message: "Staff not found" });
     }
-    res.status(204).send(); // No content
+
+    await staff.destroy();
+
+    res.status(200).json({ message: "Staff deleted successfully" });
   } catch (error) {
-    res.status(500).send(`Error deleting staff: ${error.message}`);
+    res.status(500).json({ message: `Error deleting Staff: ${error.message}` });
+  }
+};
+
+export const getStaffByNic = async (req, res) => {
+  try {
+    const { nic } = req.params;
+
+    const staff = await Staff.findOne({
+      where: {
+        nic: nic,
+      },
+    });
+
+    if (!staff) {
+      return res.status(404).json({ message: "Staff not found" });
+    }
+
+    res.status(200).json(staff);
+  } catch (error) {
+    res.status(500).json({ message: `Error fetching Staff: ${error.message}` });
   }
 };
 
@@ -83,7 +115,7 @@ export const loginStaff = async (req, res) => {
     // Find user by email
     const user = await Staff.findOne({ where: { email } });
     if (!user) {
-      return res.status(404).send("Admin not found");
+      return res.status(404).send("Staff member not found");
     }
 
     // Compare passwords

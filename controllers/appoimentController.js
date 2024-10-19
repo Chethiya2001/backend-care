@@ -35,8 +35,8 @@ export const getAllAppointments = async (req, res) => {
   try {
     const appointments = await Appointment.findAll({
       include: [
-        { model: Doctor, attributes: ["id", "name"] }, // Fetch doctor details
-        { model: Patient, attributes: ["id", "name"] }, // Fetch patient details
+        { model: Doctor, attributes: ["nic", "name"] }, // Fetch doctor details
+        { model: Patient, attributes: ["nic", "name"] }, // Fetch patient details
       ],
     });
 
@@ -53,8 +53,8 @@ export const getAppointmentById = async (req, res) => {
 
     const appointment = await Appointment.findByPk(id, {
       include: [
-        { model: Doctor, attributes: ["id", "name"] },
-        { model: Patient, attributes: ["id", "name"] },
+        { model: Doctor, attributes: ["nic", "name"] },
+        { model: Patient, attributes: ["nic", "name"] },
       ],
     });
 

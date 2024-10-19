@@ -2,11 +2,6 @@ import { DataTypes } from "sequelize";
 import sequelize from "../db.js";
 
 const Patient = sequelize.define("Patient", {
-  id: {
-    type: DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV4,
-    primaryKey: true,
-  },
   name: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -27,6 +22,7 @@ const Patient = sequelize.define("Patient", {
   nic: {
     type: DataTypes.STRING,
     allowNull: false,
+    primaryKey: true,
   },
   gender: {
     type: DataTypes.STRING,
