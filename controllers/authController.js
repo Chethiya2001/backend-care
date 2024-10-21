@@ -18,7 +18,7 @@ export const createAdminRegister = async (req, res) => {
       password: hashedPassword,
       contact,
       nic,
-      role: role || "user", // Default to "user" if role is not provided
+      role: role || "staff",
     });
 
     res.status(201).send(`Admin with the id ${user.id} created successfully`);

@@ -13,14 +13,15 @@ export const addStaff = async (req, res) => {
       nic,
       password: hashedPassword,
       age,
+      
     });
     res.status(201).json({
       message: "Staff added successfully",
       staff,
     });
   } catch (error) {
-    console.error("Error creating staff:", error); // Log the error
-    res.status(500).json({ message: `Error creating staff: ${error.message}` }); // Ensure response is JSON
+    console.error("Error creating staff:", error); 
+    res.status(500).json({ message: `Error creating staff: ${error.message}` }); 
   }
 };
 

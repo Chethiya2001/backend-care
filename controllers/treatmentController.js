@@ -11,7 +11,7 @@ export const addTreatment = async (req, res) => {
       price,
       date_time,
       patient_name,
-      doctor_nic,
+      doctorNic,
     } = req.body;
 
     const treatment = await Treatment.create({
@@ -22,7 +22,7 @@ export const addTreatment = async (req, res) => {
       price,
       date_time,
       patient_name,
-      doctor_nic,
+      doctorNic,
     });
 
     res.status(201).json({
@@ -73,7 +73,7 @@ export const updateTreatment = async (req, res) => {
       price,
       date_time,
       patient_name,
-      doctor_nic,
+      doctorNic,
     } = req.body;
 
     const [updated] = await Treatment.update(
@@ -85,7 +85,7 @@ export const updateTreatment = async (req, res) => {
         price,
         date_time,
         patient_name,
-        doctor_nic,
+        doctorNic ,
       },
       { where: { id } }
     );

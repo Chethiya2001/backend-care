@@ -1,6 +1,6 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../db.js";
-
+import Doctor from "./Doctor.js";
 
 const Treatment = sequelize.define("Treatment", {
   id: {
@@ -21,10 +21,6 @@ const Treatment = sequelize.define("Treatment", {
     allowNull: true,
   },
   treatment_type_discription: {
-    type: DataTypes.DATE,
-    allowNull: false,
-  },
-  price: {
     type: DataTypes.STRING,
     allowNull: false,
   },
@@ -37,10 +33,17 @@ const Treatment = sequelize.define("Treatment", {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  doctor_nic: {
+  doctorNic: {
+    // Updated field name
     type: DataTypes.STRING,
     allowNull: false,
+    references: {
+      model: Doctor, 
+      key: "nic", 
+    },
   },
 });
+
+Treatment.belongsTo(Doctor, { foreignKey: "doctorNic" });
 
 export default Treatment;
