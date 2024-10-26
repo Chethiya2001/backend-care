@@ -5,6 +5,7 @@ import {
   getTreatmentById,
   updateTreatment,
   deleteTreatment,
+  
 } from "../controllers/treatmentController.js"; // Adjust path as needed
 
 const router = express.Router();

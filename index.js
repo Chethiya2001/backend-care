@@ -6,6 +6,8 @@ import sequelize from "./db.js";
 import AuthRoutes from "./routes/auth.js";
 import TreatmentRoutes from "./routes/treatment.js";
 import AppointmentRoutes from "./routes/appoiment.js";
+import PatientRoutes from "./routes/patient.js";
+import paymentRoutes from "./routes/payment.js";
 
 import cors from "cors";
 
@@ -25,6 +27,8 @@ app.use("/doctor", DoctorRoutes);
 app.use("/staff", starfRoutes);
 app.use("/treatment", TreatmentRoutes);
 app.use("/appointment", AppointmentRoutes);
+app.use("/patient", PatientRoutes);
+app.use("/payment", paymentRoutes);
 
 const startServer = async () => {
   try {

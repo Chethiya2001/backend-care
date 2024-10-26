@@ -72,7 +72,16 @@ export const getDoctors = async (req, res) => {
     res.status(500).send(`Error fetching doctors: ${error.message}`);
   }
 };
-
+export const getAllDoctorsByName = async (req, res) => {
+  try {
+    const doctors = await Doctor.findAll({
+      attributes: ["nic", "name"],
+    });
+    res.status(200).json(doctors);
+  } catch (error) {
+    res.status(500).send(`Error fetching doctors: ${error.message}`);
+  }
+};
 export const updateDoctor = async (req, res) => {
   try {
     const { nic } = req.params;

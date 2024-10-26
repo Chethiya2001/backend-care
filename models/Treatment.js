@@ -34,7 +34,6 @@ const Treatment = sequelize.define("Treatment", {
     allowNull: false,
   },
   doctorNic: {
-    // Updated field name
     type: DataTypes.STRING,
     allowNull: false,
     references: {

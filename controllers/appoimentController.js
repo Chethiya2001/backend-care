@@ -5,11 +5,11 @@ import Patient from "../models/Patient.js";
 // Create a new appointment
 export const createAppointment = async (req, res) => {
   try {
-    const { doctorId, patientId, date, time, appointmentNumber } = req.body;
+    const { doctorNic, patientNic, date, time, appointmentNumber } = req.body;
 
     // Ensure doctor and patient exist
-    const doctor = await Doctor.findByPk(doctorId);
-    const patient = await Patient.findByPk(patientId);
+    const doctor = await Doctor.findByPk(doctorNic);
+    const patient = await Patient.findByPk(patientNic);
 
     if (!doctor || !patient) {
       return res.status(404).json({ message: "Doctor or Patient not found" });
@@ -17,8 +17,8 @@ export const createAppointment = async (req, res) => {
 
     // Create new appointment
     const appointment = await Appointment.create({
-      doctorId,
-      patientId,
+      doctorNic,
+      patientNic,
       date,
       time,
       appointmentNumber,
@@ -119,5 +119,30 @@ export const deleteAppointment = async (req, res) => {
     res.status(200).json({ message: "Appointment deleted successfully" });
   } catch (error) {
     res.status(500).json({ message: "Error deleting appointment", error });
+  }
+};
+// Get all appointments for a specific doctor by NIC
+export const getAppointmentsByDoctorNic = async (req, res) => {
+  try {
+    const { nic } = req.params; // Extract doctor NIC from request parameters
+
+    // Fetch appointments where doctorNic matches the provided NIC
+    const appointments = await Appointment.findAll({
+      where: { doctorNic: nic }, // Filter appointments by doctor NIC
+      include: [
+        { model: Doctor, attributes: ["nic", "name"] },
+        { model: Patient, attributes: ["nic", "name", "contact"] },
+      ],
+    });
+
+    if (appointments.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "No appointments found for this doctor." });
+    }
+
+    res.status(200).json(appointments);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching appointments", error });
   }
 };
