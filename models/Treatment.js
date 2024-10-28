@@ -1,6 +1,7 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../db.js";
 import Doctor from "./Doctor.js";
+import Patient from "./Patient.js";
 
 const Treatment = sequelize.define("Treatment", {
   id: {
@@ -37,12 +38,21 @@ const Treatment = sequelize.define("Treatment", {
     type: DataTypes.STRING,
     allowNull: false,
     references: {
-      model: Doctor, 
-      key: "nic", 
+      model: Doctor,
+      key: "nic",
+    },
+  },
+  patientNic: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    references: {
+      model: Patient,
+      key: "nic",
     },
   },
 });
 
 Treatment.belongsTo(Doctor, { foreignKey: "doctorNic" });
+Treatment.belongsTo(Patient, { foreignKey: "patientNic" });
 
 export default Treatment;

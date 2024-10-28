@@ -4,25 +4,27 @@ import Treatment from "../models/Treatment.js";
 export const addTreatment = async (req, res) => {
   try {
     const {
+      id,
       prescribe,
       medicine_discription,
       Illness_description,
       treatment_type_discription,
-      price,
       date_time,
       patient_name,
       doctorNic,
+      patientNic,
     } = req.body;
 
     const treatment = await Treatment.create({
+      id,
       prescribe,
       medicine_discription,
       Illness_description,
       treatment_type_discription,
-      price,
       date_time,
       patient_name,
       doctorNic,
+      patientNic,
     });
 
     res.status(201).json({
@@ -85,7 +87,7 @@ export const updateTreatment = async (req, res) => {
         price,
         date_time,
         patient_name,
-        doctorNic ,
+        doctorNic,
       },
       { where: { id } }
     );
@@ -112,5 +114,26 @@ export const deleteTreatment = async (req, res) => {
     res.status(204).send(); // No content
   } catch (error) {
     res.status(500).send(`Error deleting treatment: ${error.message}`);
+  }
+};
+export const getTreatmentsByPatientNic = async (req, res) => {
+  try {
+    const { patientNic } = req.params;
+    const treatments = await Treatment.findAll({
+      where: { patientNic },
+    });
+
+    if (treatments.length > 0) {
+      res.status(200).json(treatments);
+    } else {
+      res
+        .status(404)
+        .json({ message: "No treatments found for this patient." });
+    }
+  } catch (error) {
+    console.error("Error fetching treatments:", error);
+    res
+      .status(500)
+      .json({ message: `Error fetching treatments: ${error.message}` });
   }
 };
