@@ -1,41 +1,33 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../db.js";
 
-const Admin = sequelize.define("Admin", {
+const IssuedDrug = sequelize.define("IssuedDrug", {
   id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
     primaryKey: true,
   },
-  name: {
+  drugId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+  },
+  ownerNic: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  address: {
+  petName: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  email: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    unique: true,
-  },
-  password: {
-    type: DataTypes.STRING,
+  quantityIssued: {
+    type: DataTypes.INTEGER,
     allowNull: false,
   },
-  contact: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  nic: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  role: {
-    type: DataTypes.STRING,
+  issueDate: {
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW,
     allowNull: false,
   },
 });
 
-export default Admin;
+export default IssuedDrug;

@@ -3,6 +3,7 @@ import express from "express";
 import {
   createAdminRegister,
   loginAdmin,
+  getUserData
 } from "../controllers/authController.js";
 
 import { authenticateToken, authorizeRoles } from "../middleware/token.js";
@@ -18,5 +19,12 @@ router.post(
   authorizeRoles("admin"),
   createAdminRegister
 );
+router.get(
+  "/user",
+  authenticateToken,
+  authorizeRoles(),
+  getUserData
+);
+
 
 export default router;

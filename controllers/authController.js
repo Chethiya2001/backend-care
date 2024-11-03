@@ -18,7 +18,7 @@ export const createAdminRegister = async (req, res) => {
       password: hashedPassword,
       contact,
       nic,
-      role: role || "staff",
+      role: role,
     });
 
     res.status(201).send(`Admin with the id ${user.id} created successfully`);
@@ -55,5 +55,26 @@ export const loginAdmin = async (req, res) => {
       .json({ message: "Login successful", token, role: user.role });
   } catch (error) {
     res.status(500).send(`Error during login: ${error.message}`);
+  }
+};
+//get data by token
+
+// Controller to get logged-in user data
+export const getUserData = async (req, res) => {
+  try {
+    // req.user is set by authenticateToken middleware
+    const userId = req.user.id;
+
+    const user = await Auth.findByPk(userId, {
+      attributes: { exclude: ["password"] },
+    });
+
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).send(`Error fetching user data: ${error.message}`);
   }
 };
