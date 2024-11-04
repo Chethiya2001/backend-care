@@ -131,13 +131,12 @@ export const loginStaff = async (req, res) => {
       expiresIn: "24h",
     });
 
-    res
-      .status(200)
-      .json({
-        message: "Login successful",
-        token: token,
-        role: user.role,
-      });
+    res.status(200).json({
+      message: "Login successful",
+      token: token,
+      role: user.role,
+      nic: user.nic,
+    });
   } catch (error) {
     res.status(500).send(`Error during login: ${error.message}`);
   }

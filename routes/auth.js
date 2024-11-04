@@ -3,7 +3,7 @@ import express from "express";
 import {
   createAdminRegister,
   loginAdmin,
-  getUserData
+  getAdminByNic
 } from "../controllers/authController.js";
 
 import { authenticateToken, authorizeRoles } from "../middleware/token.js";
@@ -20,10 +20,8 @@ router.post(
   createAdminRegister
 );
 router.get(
-  "/user",
-  authenticateToken,
-  authorizeRoles(),
-  getUserData
+  "/nic/:nic",
+  getAdminByNic
 );
 
 

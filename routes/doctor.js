@@ -6,7 +6,8 @@ import {
   deleteDoctor,
   getDoctorByNic,
   getAllDoctorsByName,
-  loginDoctor
+  loginDoctor,
+
 } from "../controllers/doctorController.js";
 
 const router = express.Router();
@@ -31,5 +32,6 @@ router.put("/:nic", updateDoctor);
 
 // Route to delete a doctor by NIC
 router.delete("/:nic", deleteDoctor);
+
 
 export default router;

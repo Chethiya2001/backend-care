@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 
 export const createAdminRegister = async (req, res) => {
   try {
-    const { name, address, email, password, contact, nic} = req.body;
+    const { name, address, email, password, contact, nic } = req.body;
 
     // Hash the password before saving it
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -59,22 +59,14 @@ export const loginAdmin = async (req, res) => {
 };
 //get data by token
 
-// Controller to get logged-in user data
-export const getUserData = async (req, res) => {
+export const getAdminByNic = async (req, res) => {
   try {
-    // req.user is set by authenticateToken middleware
-    const userId = req.user.id;
-
-    const user = await Auth.findByPk(userId, {
-      attributes: { exclude: ["password"] },
-    });
-
-    if (!user) {
-      return res.status(404).send("User not found");
+    const admin = await Auth.findOne({ where: { nic: req.params.nic } });
+    if (!admin) {
+      return res.status(404).send("Admin not found");
     }
-
-    res.status(200).json(user);
+    res.status(200).json(admin);
   } catch (error) {
-    res.status(500).send(`Error fetching user data: ${error.message}`);
+    res.status(500).send(`Error fetching admin: ${error.message}`);
   }
 };

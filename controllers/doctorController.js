@@ -55,17 +55,20 @@ export const loginDoctor = async (req, res) => {
     }
 
     // Create a JWT token
-    const token = jwt.sign({ id: user.id, email: user.email }, jwtSecret, {
-      expiresIn: "24h",
-    });
+    const token = jwt.sign(
+      { id: user.id, email: user.email, name: user.name, nic: user.nic },
+      jwtSecret,
+      {
+        expiresIn: "24h",
+      }
+    );
 
-    res
-      .status(200)
-      .json({
-        message: "Login successful",
-        token: token,
-        role: user.role,
-      });
+    res.status(200).json({
+      message: "Login successful",
+      token: token,
+      role: user.role,
+      nic: user.nic,
+    });
   } catch (error) {
     res.status(500).send(`Error during login: ${error.message}`);
   }

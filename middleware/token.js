@@ -11,7 +11,7 @@ export const authenticateToken = (req, res, next) => {
   jwt.verify(token, jwtSecret, (err, user) => {
     if (err) return res.sendStatus(403);
     req.user = user;
-
+    console.log("Authenticated user:", req.user); // Log the authenticated user
     next();
   });
 };
