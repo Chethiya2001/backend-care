@@ -1,5 +1,6 @@
 import Staff from "../models/Medicals.js";
 import bcrypt from "bcrypt";
+const jwtSecret = "ADBC45321F475";
 import jwt from "jsonwebtoken";
 export const addStaff = async (req, res) => {
   try {
@@ -13,15 +14,15 @@ export const addStaff = async (req, res) => {
       nic,
       password: hashedPassword,
       age,
-      
+      role: "staff",
     });
     res.status(201).json({
       message: "Staff added successfully",
       staff,
     });
   } catch (error) {
-    console.error("Error creating staff:", error); 
-    res.status(500).json({ message: `Error creating staff: ${error.message}` }); 
+    console.error("Error creating staff:", error);
+    res.status(500).json({ message: `Error creating staff: ${error.message}` });
   }
 };
 
@@ -130,7 +131,13 @@ export const loginStaff = async (req, res) => {
       expiresIn: "24h",
     });
 
-    res.status(200).json({ message: "Login successful", token });
+    res
+      .status(200)
+      .json({
+        message: "Login successful",
+        token: token,
+        role: user.role,
+      });
   } catch (error) {
     res.status(500).send(`Error during login: ${error.message}`);
   }

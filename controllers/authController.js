@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 
 export const createAdminRegister = async (req, res) => {
   try {
-    const { name, address, email, password, contact, nic, role } = req.body;
+    const { name, address, email, password, contact, nic} = req.body;
 
     // Hash the password before saving it
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -18,7 +18,7 @@ export const createAdminRegister = async (req, res) => {
       password: hashedPassword,
       contact,
       nic,
-      role: role,
+      role: "admin",
     });
 
     res.status(201).send(`Admin with the id ${user.id} created successfully`);

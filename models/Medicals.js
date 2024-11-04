@@ -22,10 +22,6 @@ const Staff = sequelize.define("Staff", {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  qualifications: {
-    type: DataTypes.TEXT,
-    allowNull: false,
-  },
   password: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -38,6 +34,11 @@ const Staff = sequelize.define("Staff", {
     type: DataTypes.STRING,
     allowNull: false,
     primaryKey: true,
+  },
+  role: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    defaultValue: "staff",
   },
 });
 

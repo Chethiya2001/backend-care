@@ -8,7 +8,6 @@ import TreatmentRoutes from "./routes/treatment.js";
 import AppointmentRoutes from "./routes/appoiment.js";
 import PatientRoutes from "./routes/patient.js";
 import paymentRoutes from "./routes/payment.js";
-import RolesRoute from "./routes/roles.js";
 import InventroryRoutes from "./routes/inventroty.js";
 import IssueDrugRoutes from "./routes/issueDrug.js";
 
@@ -32,7 +31,7 @@ app.use("/treatment", TreatmentRoutes);
 app.use("/appointment", AppointmentRoutes);
 app.use("/patient", PatientRoutes);
 app.use("/payment", paymentRoutes);
-app.use("/role", RolesRoute);
+
 app.use("/inventory", InventroryRoutes);
 app.use("/issue-drug", IssueDrugRoutes);
 

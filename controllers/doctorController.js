@@ -28,6 +28,7 @@ export const addDoctor = async (req, res) => {
       password: hashedPassword,
       nic,
       age,
+      role: "doctor",
     });
     res.status(201).json({
       message: "Doctor added successfully",
@@ -58,7 +59,13 @@ export const loginDoctor = async (req, res) => {
       expiresIn: "24h",
     });
 
-    res.status(200).json({ message: "Login successful", token, data: user });
+    res
+      .status(200)
+      .json({
+        message: "Login successful",
+        token: token,
+        role: user.role,
+      });
   } catch (error) {
     res.status(500).send(`Error during login: ${error.message}`);
   }
@@ -100,7 +107,6 @@ export const updateDoctor = async (req, res) => {
       email,
       qualifications,
       gender,
-
       contact,
       age,
     });

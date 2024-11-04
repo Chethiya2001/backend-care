@@ -6,6 +6,7 @@ import {
   deleteDoctor,
   getDoctorByNic,
   getAllDoctorsByName,
+  loginDoctor
 } from "../controllers/doctorController.js";
 
 const router = express.Router();
@@ -18,6 +19,9 @@ router.get("/", getDoctors);
 
 // Route to get all doctors by name
 router.get("/name", getAllDoctorsByName);
+
+// Route to login a doctor
+router.post("/login", loginDoctor);
 
 // Route to get a specific doctor by NIC
 router.get("/nic/:nic", getDoctorByNic);
