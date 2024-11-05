@@ -45,14 +45,14 @@ export const loginAdmin = async (req, res) => {
 
     // Create a JWT token with the user's id, email, and role
     const token = jwt.sign(
-      { id: user.id, email: user.email, role: user.role },
+      { id: user.id, email: user.email, role: user.role, nic: user.nic },
       jwtSecret,
       { expiresIn: "24h" }
     );
 
     res
       .status(200)
-      .json({ message: "Login successful", token, role: user.role });
+      .json({ message: "Login successful", token, role: user.role ,nic: user.nic});
   } catch (error) {
     res.status(500).send(`Error during login: ${error.message}`);
   }

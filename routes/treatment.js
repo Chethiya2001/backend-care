@@ -5,7 +5,7 @@ import {
   getTreatmentById,
   updateTreatment,
   deleteTreatment,
-  getTreatmentsByPatientNic,
+  getTreatmentsByDoctorNic,
 } from "../controllers/treatmentController.js"; // Adjust path as needed
 
 const router = express.Router();
@@ -25,6 +25,6 @@ router.put("/:id", updateTreatment);
 // Route to delete a treatment by ID
 router.delete("/:id", deleteTreatment);
 
-router.get("/patient/:patientNic", getTreatmentsByPatientNic);
+router.get("/doctor/:doctorNic", getTreatmentsByDoctorNic);
 
 export default router;

@@ -116,11 +116,11 @@ export const deleteTreatment = async (req, res) => {
     res.status(500).send(`Error deleting treatment: ${error.message}`);
   }
 };
-export const getTreatmentsByPatientNic = async (req, res) => {
+export const getTreatmentsByDoctorNic = async (req, res) => {
   try {
-    const { patientNic } = req.params;
+    const { doctorNic } = req.params;
     const treatments = await Treatment.findAll({
-      where: { patientNic },
+      where: { doctorNic },
     });
 
     if (treatments.length > 0) {
