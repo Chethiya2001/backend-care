@@ -10,6 +10,7 @@ import PatientRoutes from "./routes/patient.js";
 import paymentRoutes from "./routes/payment.js";
 import InventroryRoutes from "./routes/inventroty.js";
 import IssueDrugRoutes from "./routes/issueDrug.js";
+import SmsRoutes from "./routes/sms-send.js";
 
 import cors from "cors";
 
@@ -31,7 +32,7 @@ app.use("/treatment", TreatmentRoutes);
 app.use("/appointment", AppointmentRoutes);
 app.use("/patient", PatientRoutes);
 app.use("/payment", paymentRoutes);
-
+app.use("/sms-send", SmsRoutes);
 app.use("/inventory", InventroryRoutes);
 app.use("/issue-drug", IssueDrugRoutes);
 
